@@ -44,22 +44,22 @@ if(($user['droits']=='etudiant' || $user['droits']=='admin') ){
   <div >
 
     <div class="row justify-content-start custom-line m-4">
+    <div class="col-5 m-2" data-toggle="tooltip" tabindex="0" title="Liste des salles">
+    <a href="salles.php?jeton=<?=$_SESSION['jeton']?>"> <img src="check.jpg" width="500" height="500" id="Plan" class=" img-fluid rounded mx-auto d-block" style="height:100%"/> </a>
+     </div>
     <div class="col-5 m-2" data-toggle="tooltip" tabindex="0" title="Réservation">
     <a href="reservation.php?jeton=<?=$_SESSION['jeton']?>"> <img src="Réservation.jpg"  id="Plan" width="500" height="500" class="img-fluid rounded mx-auto d-block" style="height:100%" > </a>     
     </div>
-     
-    <div class="col-5 m-2" data-toggle="tooltip" tabindex="0" title="Liste des salles">
-    <a href="salles.php?jeton=<?=$_SESSION['jeton']?>"> <img src="interieur.jpg" width="500" height="500" id="Plan" class=" img-fluid rounded mx-auto d-block" style="height:100%"/> </a>
-     </div> 
+      
       </div> 
       
       <div class="row justify-content-start custom-line m-4">
     <div class="col-5 m-2">
-    <a href="faq.php"> <img src="faq.jpg" width="500" height="500" id="Plan"  class="rounded img-fluid mx-auto d-block" style="height:100%"/> </a>
+    <a href="faq.php"> <img src="faq2.jpg" width="500" height="500" id="Plan"  class="rounded img-fluid mx-auto d-block" style="height:100%"/> </a>
     </div> 
 
       <div class="col-5 m-2">
-      <a href="salles.php"> <img src="information.jpg" width="500" height="500" id="Plan" class="rounded img-fluid mx-auto d-block" style="height:100% ;max-width:100%" /> </a>
+      <a href="information.php"> <img src="information2.jpg" width="500" height="500" id="Plan" class="rounded img-fluid mx-auto d-block" style="height:100% ;max-width:100%" /> </a>
       </div> 
       </div> 
       </div>

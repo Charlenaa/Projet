@@ -34,7 +34,7 @@ getOneSalleAll($data,$id);
     <div id="app" class="container" style="margin-top:45px">
     <h1 class="text-center p-2">Infos salle <?=$id?> <button class="btn" onclick="modifierSalle(<?=$_GET['id']?>)"><i class="material-icons">&#xe150;</i></button></h1>
     <div class="p-2 pb-3"> 
-        <a href="newCreneau.php?jeton=<?=$_SESSION['jeton']?>">Ajouter un nouveau creneau</a>
+        <a href="newCreneau.php?place=<?=$_GET['place']?>&jeton=<?=$_SESSION['jeton']?>">Ajouter un nouveau creneau</a>
     </div>
 <table class="table table-bordered table-hover table-secondary">
     <tr>
@@ -111,12 +111,13 @@ Voulez vous vraiment continuer ?`)){
     }
     function modifierSalle(nums){
         let newnb=prompt('Modifier le nombre de place de la salle',<?=$_GET['place']?>);
+        if(newnb!=null){
         let data= new FormData();
         data.set('nb',newnb);
         data.set('nums',nums);
         axios({
             method:'post',
-            url:'updateSalle.php',
+            url:'updateSalle.php?jeton=<?=$_SESSION['jeton']?>',
             data:data
         }).then((response)=>{
             console.log(response.data);
@@ -130,7 +131,7 @@ Voulez vous vraiment continuer ?`)){
         }).catch((e)=>console.error(e))
 
     }
-    
+    }
 </script>
 </body>
 </html>

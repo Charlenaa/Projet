@@ -1,6 +1,6 @@
 <?php
 session_start();
-if($_GET['jeton']==$_SESSION['jeton']){
+if($_GET['jeton']==$_SESSION['jeton'] && $_SESSION['jeton']=!''){
 $num=$_POST['num'];
 include('db.php');
 supprimerCreneau($num);

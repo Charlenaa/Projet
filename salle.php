@@ -128,7 +128,7 @@ include 'footer.php';
            if(response.data.message=='réservation reuissie '){
             tab.innerHTML+="<i style='font-size:24px' class='fas'>&#xf164;</i>";
             setTimeout(function(){
-                document.location.href="reservation.php";
+                document.location.href="reservation.php?jeton=<?=$_SESSION['jeton']?>";
             },5000);
            }
            else{

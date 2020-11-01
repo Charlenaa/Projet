@@ -2,7 +2,7 @@
 session_start();
 include('db.php');
 $data;
-getSalle($data);
+getSalleAll($data);
 $user=$_SESSION['user'];
 if($user['droits']=='admin' && $_SESSION['jeton']==$_GET['jeton'] && $_SESSION['jeton']!=''){
     if(time()>=$_SESSION['ttl']){
@@ -28,12 +28,12 @@ if($user['droits']=='admin' && $_SESSION['jeton']==$_GET['jeton'] && $_SESSION['
 		include("header.php");
      ?>
     <div class="container" style="margin-top:70px">
-    <h1 class="text-center">Liste des salles disponibles</h1>
+    <h1 class="text-center">Liste des salles</h1>
     <table class="table table-hover table-bordered table-secondary">
         <tr>
             <th>Numero de salle</th>
             <th>Nombre de places</th>
-            <th>nombre de créneaux disponibles</th>
+            <th>nombre de créneaux</th>
         </tr>
         <?php
         foreach ($data as $value) {

@@ -20,6 +20,18 @@ function getSalle(&$dat){
     $data=$req->fetchAll(PDO::FETCH_ASSOC);
     $dat=$data;
 }
+function getSalleAll(&$dat){
+    global $bd;
+    $req= $bd->query('select *, ((SELECT COUNT(*)
+     from creneau WHERE creneau.Num_S=salle.Num_S)-
+     (SELECT COUNT(*) from creneau NATURAL JOIN reserver
+      where salle.Num_S=reserver.Num_S AND salle.Nbre_Place=(
+          SELECT count(*) from reserver where reserver.num_C=creneau.num_C
+      ))) as nb_creneau
+       from salle');
+    $data=$req->fetchAll(PDO::FETCH_ASSOC);
+    $dat=$data;
+}
 function getOneSalle(&$dat,$num){
     global $bd;
     $req=$bd->prepare('select * ,(salle.Nbre_Place-(SELECT COUNT(*)
@@ -39,9 +51,7 @@ function getOneSalleAll(&$dat,$num){
     $req=$bd->prepare('select * ,(salle.Nbre_Place-(SELECT COUNT(*)
      from reserver WHERE reserver.Num_S=creneau.Num_S AND reserver.num_C=
      creneau.num_C AND reserver.dateRes=creneau.dateRes )) as restant from salle NATURAL join creneau 
-     WHERE salle.Num_S=:num HAVING salle.Nbre_Place > 
-     (SELECT COUNT(*) from reserver WHERE reserver.Num_S=creneau.Num_S 
-    AND reserver.num_C=creneau.num_C AND reserver.dateRes=creneau.dateRes)');
+     WHERE salle.Num_S=:num');
     $req->bindParam(':num',$num);
     $req->execute();
     $dat=$req->fetchAll(PDO::FETCH_ASSOC);
@@ -236,6 +246,16 @@ function updateSalle($numS,$nb){
     $req->bindParam(':nb',$nb);
     $req->bindParam(':nums',$numS);
     $req->execute();
+    $req=$bd->prepare('SELECT COUNT(*) as nb from reserver WHERE Num_S=:nums');
+    $req->bindParam(':nums',$numS);
+    $req->execute();
+    $data=$req->fetch(PDO::FETCH_ASSOC);
+    if($data['nb']>=$nb){
+        $req=$bd->prepare('DELETE FROM reserver where Num_S=:nums');
+        $req->bindParam(':nums',$numS);
+        $req->execute();
+    }
+
 }
 function getCommentaires(&$dat){
     global $bd;

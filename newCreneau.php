@@ -5,7 +5,11 @@ include('db.php');
 getAllSalle($data);
 $user=$_SESSION['user'];
 if($user['droits']=='etudiant' || $user['droits']=='admin' && $_SESSION['jeton']==$_GET['jeton'] && $_SESSION['jeton']!=''){
-$_SESSION['jeton']=$_GET['jeton'];
+    if(time()>=$_SESSION['ttl']){
+        echo "sup";
+        $_SESSION['jeton'] = bin2hex(openssl_random_pseudo_bytes(6));
+        $_SESSION['ttl']=time()+10*60;
+    }
 
 ?>
 <!DOCTYPE html>
@@ -28,7 +32,7 @@ $_SESSION['jeton']=$_GET['jeton'];
      ?>
      <div class="align-self-center mx-auto"> 
          <div  class="jumbotron" style="opacity:0.8">
-    <form action="addCreneau.php" method="post" >
+    <form action="addCreneau.php?jeton=<?=$_SESSION['jeton']?>&place=<?=$_GET['place']?>" method="post" >
     
     <div class="form-group">
         <label for="salle">Salle:</label>

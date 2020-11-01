@@ -2,6 +2,11 @@
 session_start();
 $user=$_SESSION['user'];
 if($user['droits']=='etudiant' || $user['droits']=='admin' && $_SESSION['jeton']==$_GET['jeton'] && $_SESSION['jeton']!=''){
+    if(time()>=$_SESSION['ttl']){
+        echo "sup";
+        $_SESSION['jeton'] = bin2hex(openssl_random_pseudo_bytes(6));
+        $_SESSION['ttl']=time()+10*60;
+    }
 ?>
 <!DOCTYPE html>
 <html lang="en" style="height:100%">
@@ -24,7 +29,7 @@ if($user['droits']=='etudiant' || $user['droits']=='admin' && $_SESSION['jeton']
      ?>
      <div class="align-self-center mx-auto"> 
          <div  class="jumbotron" style="opacity:0.8">
-         <form method="post" action="modif.php">
+         <form method="post" action="modif.php?jeton=<?=$_SESSION['jeton']?>">
          
          <div class="form-group">
             <label for="nb">Id créneau :</label>
@@ -34,7 +39,7 @@ if($user['droits']=='etudiant' || $user['droits']=='admin' && $_SESSION['jeton']
         <input type="hidden" name="idS" value ="<?=$_GET['numS']?>">
         <div class="form-group">
             <label for="nb">Nombre de places</label>
-            <input type="text" class="form-control" value="<?=$_GET['nb']?>" disabled>
+            <input type="text" class="form-control" name="nb_place" value="<?=$_GET['nb']?>" disabled>
         </div>
         <div class="form-group">
             <label for="date">Date début :</label>
